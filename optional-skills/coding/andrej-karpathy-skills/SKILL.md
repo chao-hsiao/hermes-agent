@@ -1,6 +1,6 @@
 ---
 name: andrej-karpathy-skills
-description: Karpathy-derived coding behavior rules for LLMs.
+description: Karpathy 衍生的 LLM 編碼行為準則。
 version: 0.1.0
 author: Andrej Karpathy (multica-ai), Hermes Agent
 license: MIT
@@ -13,63 +13,80 @@ metadata:
 
 # Andrej Karpathy Skills
 
-Behavioral guidelines to reduce common LLM coding mistakes, derived from Andrej Karpathy's observations.
+行為準則，用於減少 LLM 常見的編碼錯誤。可與專案特定指令合併使用。
 
-## When to Use
+**取捨：** 這些準則偏向謹慎而非速度。對於瑣碎的任務，自行判斷。
 
-- Before coding: think first, surface assumptions and tradeoffs.
-- Any coding task: check for over-engineering, choose minimal change.
-- Editing existing code: surgical changes only, no adjacent refactoring.
+## 何時使用
 
-## Rules
+- 寫程式前先想清楚。
+- 任何 coding task 都要檢查是否過度複雜化。
+- 盡可能選擇最小變更。
 
-### 1. Think Before Coding
-- Don't assume. Don't hide confusion. Surface tradeoffs.
-- State assumptions explicitly before implementing.
-- If multiple interpretations exist, present them all.
-- If a simpler approach exists, say so. Push back when warranted.
-- If something is unclear, stop. Name what's confusing. Ask.
+## 準則
 
-### 2. Simplicity First
-- Minimum code that solves the problem. Nothing speculative.
-- No features beyond what was asked.
-- No abstractions for single-use code.
-- No "flexibility" or "configurability" that wasn't requested.
-- No error handling for impossible scenarios.
-- If you write 200 lines and it could be 50, rewrite it.
-- Ask: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
+### 1. 編碼前思考
 
-### 3. Surgical Changes
-- Touch only what you must. Clean up only your own mess.
-- Don't "improve" adjacent code, comments, or formatting.
-- Don't refactor things that aren't broken.
-- Match existing style, even if you'd do it differently.
-- If you notice unrelated dead code, mention it — don't delete it.
-- When your changes create orphans, remove imports/variables/functions that YOUR changes made unused.
-- Don't remove pre-existing dead code unless asked.
+**不要假設。不要隱藏困惑。呈現取捨。**
 
-Test: Every changed line should trace directly to the user's request.
+實作前：
+- 明確陳述你的假設。如果不確定，詢問而不是猜測。
+- 如果存在多種解讀，全部列出 — 不要默默選一個。
+- 如果存在更簡單的方法，說出來。必要時直接提出異議。
+- 如果有不清楚的地方，停下來。指出困惑之處。詢問。
 
-### 4. Goal-Driven Execution
-- Define success criteria. Loop until verified.
+### 2. 簡潔優先
 
-Transform tasks into verifiable goals:
-- "Add validation" → "Write tests for invalid inputs, then make them pass"
-- "Fix the bug" → "Write a test that reproduces it, then make it pass"
-- "Refactor X" → "Ensure tests pass before and after"
+**用最少、可運行的程式碼解決問題。不要過度推測。**
 
-For multi-step tasks, state a brief plan:
+- 不要加要求之外的功能。
+- 不要為一次性使用的程式碼建立抽象。
+- 不要加未要求的「彈性」或「可設定性」。
+- 不要為不可能發生的場景做錯誤處理。
+- 如果 200 行程式碼可以寫成 50 行，重寫它。
+- 問自己：「資深工程師會說這太複雜了嗎？」如果是，簡化。
+
+### 3. 精準修改
+
+**只碰必須碰的。只清理你自己造成的混亂。**
+
+編輯現有程式碼時：
+- 不要「改進」相鄰的程式碼、註解或格式。
+- 不要重構沒有壞掉的東西。
+- 匹配現有風格，即使你會用不同方式寫。
+- 如果注意到無關的死程式碼，提一下 — 不要刪除它。
+
+當你的修改產生孤立程式碼時：
+- 移除因為你的修改而變得無用的匯入/變數/函式。
+- 不要移除預先存在的死程式碼，除非被要求。
+
+**檢驗標準：** 每一行修改都應該直接追溯到使用者的要求。
+
+### 4. 目標驅動執行
+
+**定義成功條件。循環驗證直到達成。**
+
+將指令式任務轉化為可驗證的目標：
+- 「加驗證」 → 「為無效輸入寫測試，再讓它們通過」
+- 「修 bug」 → 「寫一個重現 bug 的測試，再讓它通過」
+- 「重構 X」 → 「確保重構前後測試都能通過」
+
+多步驟任務先給一個簡短計畫：
 ```
-1. [Step] → verify: [check]
-2. [Step] → verify: [check]
-3. [Step] → verify: [check]
+1. [步驟] → 驗證：[check]
+2. [步驟] → 驗證：[check]
+3. [步驟] → 驗證：[check]
 ```
 
-Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
+強而有力的成功條件讓你能獨立循環執行。弱的成功條件（「讓它運作」）會需要不斷確認。
 
-## Verification
+## 運作方式
 
-These guidelines are working if:
-- Fewer unnecessary changes in diffs
-- Fewer rewrites due to over-engineering
-- Clarifying questions come before implementation, not after mistakes
+直接遵循上述準則即可。Hermes 會自動遵守這些指引。
+
+## 驗證
+
+這些準則發揮作用時：
+- diff 中不必要的修改更少
+- 因過度複雜導致的重寫更少
+- 澄清問題在實作前提出，而非在錯誤發生後
